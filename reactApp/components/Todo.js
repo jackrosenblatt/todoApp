@@ -8,7 +8,7 @@ class Todo extends React.Component{
   render(){
     return (
       <li>
-        <button className='btn btn-danger removeButton'>X</button>
+        <button className='btn btn-danger removeButton' onClick={(index) => this.props.xClick()}>X</button>
         {(this.props.completed) ? (<strike>{this.props.task}</strike>) : this.props.task}
       </li>
     )
