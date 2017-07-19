@@ -27,8 +27,14 @@ class InputLine extends React.Component{
       <form onSubmit={(e) => this.handleFormSubmit(e)}>
         <div className='form-group'>
           <div className='input-group'>
-            <input type='text' value={this.state.typedText} onChange={(e) => this.handleTypeing(e)}></input>
-            <div className='btn btn-primary addButton' onClick={() => this.handleSubmit()} type='submit'>Add todo</div>
+            <input
+              type='text'
+              value={this.state.typedText}
+              onChange={(e) => this.handleTypeing(e)}></input>
+            <div
+              className='btn btn-primary addButton'
+              onClick={() => this.handleSubmit()}
+              type='submit'>Add todo</div>
           </div>
         </div>
       </form>

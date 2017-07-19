@@ -47,11 +47,21 @@ class TodoApp extends React.Component{
     this.setState({todos: dummyData});
   }
 
+  toggleCompleted(idx){
+    dummyData[idx].completed = !dummyData[idx].completed
+
+    this.setState({todos: dummyData});
+  }
+
   render(){
     return (
       <div>
-        <InputLine submit={(task) => this.addTodo(task)}/>
-        <TodoList todos={this.state.todos} todoXClick={(idx) => this.removeTodo(idx)}/>
+        <InputLine
+          submit={(task) => this.addTodo(task)}/>
+        <TodoList
+          todos={this.state.todos}
+          todoXClick={(idx) => this.removeTodo(idx)}
+          todoTaskClick={(idx) => this.toggleCompleted(idx)}/>
       </div>
     )
   }
