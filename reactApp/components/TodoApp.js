@@ -3,23 +3,6 @@ import TodoList from './TodoList';
 import InputLine from './InputLine';
 import axios from 'axios';
 
-var dummyData = [{
-  taskText: 'Clean the dishes',
-  completed: false
-},
-{
-  taskText: 'Mow the lawn',
-  completed: true
-},
-{
-  taskText: 'Get groceries',
-  completed: false
-},
-{
-  taskText: 'Make the bed',
-  completed: true
-}]
-
 const dbUrl = "http://localhost:3000/db";
 
 class TodoApp extends React.Component{
@@ -31,7 +14,10 @@ class TodoApp extends React.Component{
   }
 
   componentDidMount(){
-    this.setState({todos: dummyData})
+    axios.get(dbUrl+'/all')
+      .then(response => {
+        this.setState({todos: response.data})
+      })
   }
 
   addTodo(task){
@@ -39,11 +25,6 @@ class TodoApp extends React.Component{
       task: task
     })
       .then(response => {
-        dummyData.push({
-          taskText: response.data.task,
-          completed: response.data.completed
-        })
-
         this.setState({ todos: this.state.todos.concat(response.data)});
       })
       .catch(error => {
@@ -51,16 +32,50 @@ class TodoApp extends React.Component{
       });
   }
 
-  removeTodo(idx){
-    dummyData.splice(idx, 1);
+  removeTodo(id){
+    axios.post(dbUrl+'/remove', {
+      id: id
+    })
+    .then(response => {
+      var index;
+      this.state.todos.forEach(function(obj, idx){
+        if(obj.id === id)
+          index=idx;
+      })
 
-    this.setState({todos: dummyData});
+      var tempArr = this.state.todos.slice()
+      tempArr.splice(index,1)
+
+      this.setState({
+        todos: tempArr
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
-  toggleCompleted(idx){
-    dummyData[idx].completed = !dummyData[idx].completed
+  toggleCompleted(id){
+    axios.post(dbUrl+'/toggle', {
+      id: id
+    })
+    .then(response => {
+      var index;
+      this.state.todos.forEach(function(obj, idx){
+        if(obj.id === id)
+          index=idx;
+      })
 
-    this.setState({todos: dummyData});
+      var tempArr = this.state.todos.slice();
+      tempArr.splice(index,1,response.data)
+
+      this.setState({
+        todos: tempArr
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   render(){
