@@ -10519,7 +10519,7 @@ var TodoApp = function (_React$Component) {
       }).then(function (response) {
         var index;
         _this4.state.todos.forEach(function (obj, idx) {
-          if (obj.id === id) index = idx;
+          if (obj._id === id) index = idx;
         });
 
         var tempArr = _this4.state.todos.slice();
@@ -11685,7 +11685,7 @@ var TodoList = function (_React$Component) {
             task: task.task,
             completed: task.completed,
             xClick: function xClick() {
-              return _this2.props.todoXClick(idx);
+              return _this2.props.todoXClick(task._id);
             },
             taskClick: function taskClick() {
               return _this2.props.todoTaskClick(idx);

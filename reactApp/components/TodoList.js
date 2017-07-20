@@ -12,7 +12,7 @@ class TodoList extends React.Component{
         {this.props.todos.map((task, idx) => (<Todo key={task._id}
           task={task.task}
           completed={task.completed}
-          xClick={() => this.props.todoXClick(idx)}
+          xClick={() => this.props.todoXClick(task._id)}
           taskClick={() => this.props.todoTaskClick(idx)}/>))}
       </ul>
     )

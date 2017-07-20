@@ -27,13 +27,9 @@ router.post('/add', (req, res) => {
 });
 
 router.post('/remove', (req, res) => {
-  const testTodo = new TodoItem({
-    task: req.body.task
-  });
-
-  testTodo.save()
-    .then(response => {
-      res.send(response);
+  TodoItem.findByIdAndRemove(req.body.id)
+    .then(document => {
+      res.send(document);
     })
     .catch(error => {
       res.send(error);

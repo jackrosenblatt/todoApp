@@ -39,7 +39,7 @@ class TodoApp extends React.Component{
     .then(response => {
       var index;
       this.state.todos.forEach(function(obj, idx){
-        if(obj.id === id)
+        if(obj._id === id)
           index=idx;
       })
 
