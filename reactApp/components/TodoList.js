@@ -13,7 +13,7 @@ class TodoList extends React.Component{
           task={task.task}
           completed={task.completed}
           xClick={() => this.props.todoXClick(task._id)}
-          taskClick={() => this.props.todoTaskClick(idx)}/>))}
+          taskClick={() => this.props.todoTaskClick(task._id)}/>))}
       </ul>
     )
   }

@@ -10537,15 +10537,18 @@ var TodoApp = function (_React$Component) {
     value: function toggleCompleted(id) {
       var _this5 = this;
 
-      _axios2.default.post(dbUrl + '/toggle', {
-        id: id
-      }).then(function (response) {
-        var index;
-        _this5.state.todos.forEach(function (obj, idx) {
-          if (obj.id === id) index = idx;
-        });
+      var index;
+      this.state.todos.forEach(function (obj, idx) {
+        if (obj._id === id) index = idx;
+      });
 
-        var tempArr = _this5.state.todos.slice();
+      var tempArr = this.state.todos.slice();
+
+      _axios2.default.post(dbUrl + '/toggle', {
+        id: id,
+        completed: !tempArr[index].completed
+      }).then(function (response) {
+        console.log(response);
         tempArr.splice(index, 1, response.data);
 
         _this5.setState({
@@ -10569,11 +10572,11 @@ var TodoApp = function (_React$Component) {
           } }),
         _react2.default.createElement(_TodoList2.default, {
           todos: this.state.todos,
-          todoXClick: function todoXClick(idx) {
-            return _this6.removeTodo(idx);
+          todoXClick: function todoXClick(id) {
+            return _this6.removeTodo(id);
           },
-          todoTaskClick: function todoTaskClick(idx) {
-            return _this6.toggleCompleted(idx);
+          todoTaskClick: function todoTaskClick(id) {
+            return _this6.toggleCompleted(id);
           } })
       );
     }
@@ -11688,7 +11691,7 @@ var TodoList = function (_React$Component) {
               return _this2.props.todoXClick(task._id);
             },
             taskClick: function taskClick() {
-              return _this2.props.todoTaskClick(idx);
+              return _this2.props.todoTaskClick(task._id);
             } });
         })
       );
